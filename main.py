@@ -4,6 +4,7 @@ from dino import *
 from floor import Floor
 from enemy import Enemy
 from text import Text
+from background import Background
 from global_variables import *
 import global_variables as gv
 p.init()
@@ -14,6 +15,7 @@ player = Dino()
 floor = Floor()
 enemy = Enemy()
 rocket = Rocket()
+background = Background()
 text = Text("PublicPixel", BLACK, resolution[0] * 0.43, resolution[1] * 0.1)
 
 # music/sound
@@ -32,6 +34,7 @@ class Run():
                     p.quit()
                     exit()
             display.fill(GREY)
+            background.update()
             floor.update()
             player.update()
             enemy.update()
