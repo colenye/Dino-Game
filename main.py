@@ -54,6 +54,11 @@ class Run():
             
             if enemy.enemy.colliderect(player.player.x, player.player.y, player.player.width, player.player.height):
                 self.dead()
+
+            for bullet in player.bullets:
+                print(bullet)
+                if bullet[1].colliderect(enemy.enemy.x, enemy.enemy.y, enemy.enemy.width, enemy.enemy.height):
+                    enemy.moveEnemy()
             self.score += 1
             
             p.display.update()

@@ -20,6 +20,20 @@ class Enemy():
             self.cacti.append(p.image.load('Sprites/Cactus/' + file))
         for file in os.listdir("Sprites/Bird"):
             self.bird.append(p.image.load("Sprites/Bird/" + file))
+    
+    def moveEnemy(self):
+        self.randenemy = random.randint(0, 1)
+        if self.randenemy == 0:
+            self.enemyImg = self.cacti[random.randint(0, len(self.cacti) - 1)]
+        else:
+            self.enemyImg = self.bird[0]
+        self.enemy = self.enemyImg.get_rect()
+        self.enemy.left = resolution[0] * 2
+        if self.randenemy == 0:
+            self.enemy.y = resolution[1] * 0.7
+        else:
+            self.enemy.y = resolution[1] * 0.55
+        gv.ding = True
     def update(self):
         # animation
         self.counter += 1
@@ -32,17 +46,5 @@ class Enemy():
         self.enemy.x -= gv.enemyspeed
         gv.enemyspeed += 0.01
         if self.enemy.right < 0:
-            self.randenemy = random.randint(0, 1)
-            if self.randenemy == 0:
-                self.enemyImg = self.cacti[random.randint(0, len(self.cacti) - 1)]
-            else:
-                self.enemyImg = self.bird[0]
-            self.enemy = self.enemyImg.get_rect()
-            self.enemy.left = resolution[0] * 2
-            if self.randenemy == 0:
-                self.enemy.y = resolution[1] * 0.7
-            else:
-                self.enemy.y = resolution[1] * 0.55
-            gv.ding = True
+            self.moveEnemy()
         display.blit(self.enemyImg, self.enemy)
-        print(enemyspeed)
