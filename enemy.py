@@ -4,6 +4,7 @@ import global_variables as gv
 import os
 import random
 p.init()
+#ji
 
 class Enemy():
     def __init__(self) -> None:
