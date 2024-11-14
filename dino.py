@@ -13,6 +13,10 @@ class Gun:
     def update(self):
         pass
 
+class HugeRocket(Gun):
+    def __init__(self) -> None:
+        super().__init__()
+        self.sprite = p.transform.scale(p.image.load('Sprites/HugeRocket.png'), (100, 100))
 class Rocket(Gun):
     def __init__(self) -> None:
         super().__init__()
@@ -21,6 +25,13 @@ class Rocket(Gun):
 class Bullet:
     def __init__(self, pos: p.rect) -> None:
         self.bulsprite = p.transform.scale(p.image.load('Sprites/bullet.png'), (50, 50))
+        self.bulpos = self.bulsprite.get_rect()
+        self.bulpos.y = pos + 20
+        self.bulpos.x += 100
+
+class RocketBullet:
+    def __init__(self, pos: p.rect) -> None:
+        self.bulsprite = p.transform.scale(p.image.load('Sprites/BulletBill.png'), (75, 75))
         self.bulpos = self.bulsprite.get_rect()
         self.bulpos.y = pos + 20
         self.bulpos.x += 100
@@ -43,6 +54,7 @@ class Dino():
         self.counter = 0
         self.index = 0
         self.gun = Rocket()
+        self.gunType = "Rocket"
         self.bullets = []
     def update(self):
         self.dy = 0
@@ -71,8 +83,19 @@ class Dino():
             self.halved = False
         if input[p.K_DOWN] and self.onGround is False:
             self.VELY += FALLSTRENGTH
-        if mouse[0]:
+        if input[p.K_2]:
+            self.bullets = []
+            self.gunType = "HugeRocket"
+        if input[p.K_1]:
+            self.bullets = []
+            self.gunType = "Rocket"
+        if mouse[0] and self.gunType == "Rocket":
+            self.gun = Rocket()
             newbul = Bullet(self.player.y)
+            self.bullets.append((newbul.bulsprite, newbul.bulpos))
+        elif mouse[0] and self.gunType == "HugeRocket":
+            self.gun = HugeRocket()
+            newbul = RocketBullet(self.player.y)
             self.bullets.append((newbul.bulsprite, newbul.bulpos))
         self.dy += self.VELY
         self.player.x += self.dx
